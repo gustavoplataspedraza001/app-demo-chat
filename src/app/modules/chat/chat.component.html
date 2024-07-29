@@ -1,0 +1,297 @@
+<div class="container-fluid">
+    <div class="row" >
+        <div class="col-md-3" [class.col-sm-12]="!ocuparAnchoCompleto && esPantallaMovil()" *ngIf="mostrarIzquierda">
+            <div class="card" style="height: auto;">
+                <div class="card-header fw-bold d-flex justify-content-between align-items-center">
+                    <img [src]="images.user" class="rounded-circle mr-1"  width="40" height="40">
+                    <label style="flex: content; margin-left: 10px;">{{user}}</label>
+                    <button hidden class="btn btn-secondary" (click)="swapGroupType()">{{activeGroup == 'common' ? "Chats":"Asistente"}}</button>
+                    <button class="btn" (click)="mostrarModal()"><i class="fa fa-cog fa-xl"></i></button>
+                    <button *ngIf="!esPantallaMovil()" class="btn" (click)="toggleSides('')"><i class="fa fa-bars fa-xl"></i></button>
+                </div>
+                <div class="card-body" >
+                    <div class="chat-messages contenedor" style="width: 100%; height: 110vh;" >
+                        <div class="row">
+                            <div class="input-group input-group-sm mb-3" *ngIf="activeGroup =='common'">
+                                <span class="input-group-text" id="inputGroup-sizing-sm"><i class="fa-solid fa-magnifying-glass"></i></span>
+                                <input type="text" class="form-control" placeholder="Buscar un Chat">
+                            </div>
+                            
+                            <div class="input-group input-group-sm mb-3" *ngIf="activeGroup =='own'" style="cursor:pointer;">
+                                <span class="input-group-text" id="inputGroup-sizing-sm" style="cursor:pointer;" (click)="addConver()"><i class="fa-solid fa-plus"></i></span>
+                                <label type="text" class="form-control" style="cursor:pointer;" (click)="addConver()">Nueva conversación</label>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div hidden class="col" *ngIf="activeGroup == 'common'">
+                                <div class="card">
+                                    <ul class="list-group list-group-flush">
+                                      <li class="list-group-item" (click)="toggleSides('ventas')">
+                                        <h5 class="card-title d-flex justify-content-between align-items-cente">
+                                            <div class="container-small">
+                                                <img [src]="images.ventas" class="rounded-circle mr-1"  width="40" height="40">
+                                                Ventas
+                                            </div>
+                                            <span class="text-body-secondary fs-6">{{getLastTime("ventas")}}</span>
+                                        </h5>
+                                        <p class="card-text text-break" >{{getLastMessage("ventas").substring(0,15)}}...</p>
+                                      </li>
+
+                                      <li class="list-group-item" (click)="toggleSides('compras')">
+                                        <h5 class="card-title d-flex justify-content-between align-items-cente">
+                                            <div class="container-small">
+                                                <img [src]="images.buys" class="rounded-circle mr-1"  width="40" height="40">
+                                                Compras
+                                            </div>
+                                            <span class="text-body-secondary fs-6">{{getLastTime("compras")}}</span>
+                                        </h5>
+                                        <p class="card-text text-break" >{{getLastMessage("compras").substring(0,15)}}...</p>
+                                      </li>
+                                      
+
+                                      <li class="list-group-item"  (click)="toggleSides('inventarios')">
+                                        <h5 class="card-title d-flex justify-content-between align-items-cente">
+                                            <div class="container-small">
+                                                <img [src]="images.inventory" class="rounded-circle mr-1"  width="40" height="40">
+                                                Inventarios
+                                            </div>
+                                            <span class="text-body-secondary fs-6">{{getLastTime("inventarios")}}</span>
+                                        </h5>
+                                        <p class="card-text text-break" >{{getLastMessage("inventarios").substring(0,15)}}...</p>
+                                      </li>   
+                                      
+                                      <li class="list-group-item"  (click)="toggleSides('cuentaspagar')">
+                                        <h5 class="card-title d-flex justify-content-between align-items-cente">
+                                            <div class="container-small">
+                                                <img [src]="images.cuentasPagar" class="rounded-circle mr-1"  width="40" height="40">
+                                                Cuentas por pagar
+                                            </div>
+                                            <span class="text-body-secondary fs-6">{{getLastTime("cuentaspagar")}}</span>
+                                        </h5>
+                                        <p class="card-text text-break" >{{getLastMessage("cuentaspagar").substring(0,15)}}...</p>
+                                      </li>   
+                                    </ul>
+                                </div>
+                            </div>
+                            <div class="col" *ngIf="activeGroup == 'own' ">
+                                <div class="card" *ngIf="listOwnChats.length > 0">
+                                    <ul class="list-group list-group-flush" *ngFor="let item of listOwnChats.reverse()">
+                                        <li class="list-group-item" (click)="changeConver(item)">
+                                          <h5 class="card-title d-flex justify-content-between align-items-cente">
+                                              <div class="container-small">
+                                                  <img [src]="images.bot" class="rounded-circle mr-1"  width="40" height="40">
+                                                  {{item.name}}
+                                              </div>
+                                              <span class="text-body-secondary fs-6"></span>
+                                          </h5>
+                                          <p class="card-text text-break" >{{item.description}}</p>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-footer text-body-secondary text-center" style="height: 55px;">
+                    <i class="fa-solid fa-robot fa-xl"></i>
+                    DataBrain Assistant Version 1.0.0
+                </div>
+                  
+                  
+                <!-- <div class="card-footer text-body-secondary text-center" style="height: 55px;">
+                    © 2024 Powered By:
+                    <label class="text-reset fw-bold" >NgSolutions</label>
+                  </div> -->
+                <!-- <div class="card-footer text-body-secondary text-center" style="height: 55px;">
+                    <i class="fa-solid fa-robot fa-xl"></i>
+                    DataBrain Assistant Version 1.0.2
+                </div> -->
+            </div>
+        </div>
+        <div class="col-md-9" [class.col-md-12]="fullScreen && !esPantallaMovil()" [class.col-sm-12]="!ocuparAnchoCompleto && esPantallaMovil()" *ngIf="mostrarDerecha">
+            <div hidden class="card" style="height: auto;" *ngIf="activeGroup == 'common'">
+                <div class="card-header fw-bold d-flex justify-content-between align-items-center">
+                    <div class="container-small">
+                        <img [src]="activeUrl" class="rounded-circle mr-1"  width="40" height="40">
+                        {{activeChat}}
+                    </div>
+                    <div style="display: flex !important;">
+                        <button class="btn"><i class="fa-solid fa-magnifying-glass fa-xl"></i></button>
+                        <button *ngIf="!esPantallaMovil()" class="btn" (click)="toggleSides('hide')"><i class="fa fa-bars fa-xl"></i></button>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <div class="chat-messages contenedor"  style="height: 110vh;" #messageContainer [scrollTop]="messageContainer.scrollHeight">
+                        <div *ngFor="let item of listMessage; let i = index">
+                            <div id="{{i}}" [ngClass]="{'chat-message-left pb-3': !item.isQuestion, 'chat-message-right pb-4': item.isQuestion}">
+                                <div>
+                                    <img [src]="item.isQuestion ? images.user : activeUrl" style="margin-right: 5px;" class="rounded-circle mr-1"  width="40" height="40">
+                                </div>
+                                <div class="card" [ngClass]="{' text-bg-secondary ms-1': !item.isQuestion, 'text-bg-success me-1' : item.isQuestion}">
+                                    <div class="card-body" style="margin-top: -15px; margin-bottom: -25px;">
+                                        <div class="fw-bold mb-1">{{item.isQuestion ? user: activeChat}}:</div>
+                                        <ng-container>
+                                            <p class="card-text" style="white-space: pre-line;">{{item.text}}</p>
+                                            <div class="text-body-secondary text-end" style="margin-top: -15px;">
+                                                <p class="fs-6" style="color: white;">{{item.time}}</p>
+                                            </div>
+                                        </ng-container>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="chat-message-left pb-3" *ngIf="typing">
+                            <div>
+                                <img [src]="activeUrl" style="margin-right: 5px;" class="rounded-circle mr-1"  width="40" height="40">
+                            </div>
+                            <div class="card text-bg-secondary ms-1" style="padding-bottom: 10px;">
+                                <div class="card-body" style="margin-top: -15px; margin-bottom: -25px;">
+                                    <div class="fw-bold mb-1" style="margin-bottom: 10px;">{{activeChat}}:</div>
+                                    <ng-container style="margin-top: 10px;">
+                                        <div class="loading-dots" style="margin-top: 5px; margin-bottom: 10px;">
+                                            <div class="dot"></div>
+                                            <div class="dot"></div>
+                                            <div class="dot"></div>
+                                        </div>
+                                    </ng-container>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-footer">
+                    <div class="input-group">
+                        <button class="btn" type="button">
+                            <i class="fa-solid fa-square-plus fa-xl"></i>
+                        </button>
+                        <button class="btn" type="button">
+                            <i class="fa-solid fa-paperclip fa-xl"></i>
+                        </button>
+                        <textarea class="form-control" rows="1"  [autofocus]="realizarFocus"  [disabled]="elementoDeshabilitado"  placeholder="Escribe tu Mensaje" aria-describedby="button-addon2" [(ngModel)]="mensaje" (keyup.enter)="enviarMensaje()" style="resize: none;"></textarea>
+                        <button class="btn btn-primary" [disabled]="elementoDeshabilitado" type="button" (click)="enviarMensaje()">
+                            <i class="fa-solid fa-paper-plane fa-xl"></i>
+                        </button>
+                    </div>
+                </div>
+                
+            </div>
+            <div class="card" style="height: auto;" *ngIf="activeGroup == 'own'">
+                <div class="card-header fw-bold d-flex justify-content-between align-items-center">
+                    <div class="container-small">
+                        <img [src]="images.bot" class="rounded-circle mr-1"  width="40" height="40">
+                        DataBrain Assistant
+                    </div>
+                    <div style="display: flex !important;">
+                        <button class="btn"><i class="fa-solid fa-magnifying-glass fa-xl"></i></button>
+                        <button *ngIf="!esPantallaMovil()" class="btn" (click)="toggleSides('hide')"><i class="fa fa-bars fa-xl"></i></button>
+                    </div>
+                </div>
+                
+                <div class="card-body">
+                    <div class="chat-messages contenedor"  style="height: 110vh;" #messageContainer [scrollTop]="messageContainer.scrollHeight">
+                        <div *ngFor="let item of listConvers.messages; let i = index">
+                            <div id="{{i}}" [ngClass]="{'chat-message-left pb-3': !item.role || item.role ==='system', 'chat-message-right pb-4': item.role === 'user'}">
+                                <div>
+                                    <img [src]="item.role ==='system'? images.bot : images.user" style="margin-right: 5px;" class="rounded-circle mr-1"  width="40" height="40">
+                                </div>
+                                <div class="card" [ngClass]="{' text-bg-secondary ms-1': item.role ==='system', 'text-bg-success me-1' : item.role ==='user'}">
+                                    <div class="card-body" style="margin-top: -15px; margin-bottom: -25px;">
+                                        <div class="fw-bold mb-1">{{item.role ==='user' ? user: 'DataBrain Assistant'}}:</div>
+                                        <ng-container>
+                                            <p class="card-text" style="white-space: pre-line;">{{item.content}}</p>
+                                            <div class="text-body-secondary text-end" style="margin-top: -15px;">
+                                                <p class="fs-6" style="color: white;">03.30</p>
+                                            </div>
+                                        </ng-container>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="chat-message-left pb-3" *ngIf="typing">
+                            <div>
+                                <img [src]="images.bot" style="margin-right: 5px;" class="rounded-circle mr-1"  width="40" height="40">
+                            </div>
+                            <div class="card text-bg-secondary ms-1" style="padding-bottom: 10px;">
+                                <div class="card-body" style="margin-top: -15px; margin-bottom: -25px;">
+                                    <div class="fw-bold mb-1" style="margin-bottom: 10px;">DataBrain Assistant:</div>
+                                    <ng-container style="margin-top: 10px;">
+                                        <div class="loading-dots" style="margin-top: 5px; margin-bottom: 10px;">
+                                            <div class="dot"></div>
+                                            <div class="dot"></div>
+                                            <div class="dot"></div>
+                                        </div>
+                                    </ng-container>
+                                </div>
+                            </div>
+                        </div>
+                        
+                    </div>
+                </div>
+                <div class="card-footer">
+                    <div class="input-group">
+                        <button class="btn" type="button">
+                            <i class="fa-solid fa-square-plus fa-xl"></i>
+                        </button>
+                        <button class="btn" type="button">
+                            <i class="fa-solid fa-paperclip fa-xl"></i>
+                        </button>
+                        <textarea class="form-control" rows="1" placeholder="Escribe tu Mensaje"  [autofocus]="focusConver"  [disabled]="elementoDeshabilitado"  aria-describedby="button-addon2" [(ngModel)]="messaegConver" (keyup.enter)="sendMessageConver()" style="resize: none;"></textarea>
+                        <button class="btn btn-primary" type="button" [disabled]="elementoDeshabilitado" (click)="sendMessageConver()">
+                            <i class="fa-solid fa-paper-plane fa-xl"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<button *ngIf="esPantallaMovil()" class="btn d-block" (click)="toggleSides(activeChat)" style="position: absolute; bottom: 0; left: 0; background-color: rgba(211, 211, 211, 0.664); border-radius: 5px; margin-top: 60px; margin-left: 5px; margin-bottom: 10px;">
+    <i [class]="iconoBoton"></i>
+  </button>
+
+  <div class="card dropdown" *ngIf="isMostrarModal">
+    <div class="card card-header">
+        <!-- Cabecera de la tarjeta -->
+    </div>
+    <div class="card-body">
+        <div class="row">
+            <div class="col-4" style="height: 90vh; border-right: 1px solid rgba(211, 211, 211, 0.492);">
+                <div class="row" style="height: 60%;">
+                    <button class="btn" (click)="cerrarSesion()" style="background-color: transparent; text-align: left;">
+                        <i class="fa-solid fa-door-closed"></i> Action 1
+                    </button>
+                    <button class="btn" (click)="cerrarSesion()" style="background-color: transparent; text-align: left;">
+                        <i class="fa-solid fa-door-closed"></i> Action 2
+                    </button>
+                    <button class="btn" style="background-color: transparent; text-align: left;">
+                        <i class="fa-solid fa-door-closed"></i> Action 3
+                    </button>
+                    <button class="btn" style="background-color: transparent; text-align: left;">
+                        <i class="fa-solid fa-door-closed"></i> Action 4
+                    </button>
+                    <button class="btn" style="background-color: transparent; text-align: left;">
+                        <i class="fa-solid fa-door-closed"></i> Action 5
+                    </button>
+                    <button class="btn" style="background-color: transparent; text-align: left;">
+                        <i class="fa-solid fa-door-closed"></i> Action 6
+                    </button>
+                    <button class="btn" style="background-color: transparent; text-align: left;">
+                        <i class="fa-solid fa-door-closed"></i> Action 7
+                    </button>
+                </div>
+                <div class="row" style="height: 30%; align-items:center;">
+                    <button class="btn" (click)="cerrarSesion()" style="background-color: transparent; text-align: left;">
+                        <i class="fa-solid fa-door-closed"></i> Cerrar Sesión
+                    </button>
+                </div>
+            </div>
+            
+            <div class="col-8">
+                
+            </div>
+        </div>
+    </div>
+</div>
+
+<div *ngIf="isMostrarModal" class="overlay" (click)="mostrarModal()"></div>
+

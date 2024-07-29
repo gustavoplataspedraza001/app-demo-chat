@@ -1,0 +1,122 @@
+.chat-messages {
+    /* display: flex; */
+    /* flex-direction: column; */
+    max-height: 80vh;
+    overflow-y: auto;
+    overflow-x: hidden;
+}
+
+.chat-message-left,
+.chat-message-right {
+    display: flex;
+    flex-shrink: 0
+}
+
+.chat-message-left {
+    margin-right: auto
+}
+
+.chat-message-right {
+    flex-direction: row-reverse;
+    margin-left: auto
+}
+
+/* Estilos para motores Webkit y blink (Chrome, Safari, Opera... )*/
+
+.contenedor::-webkit-scrollbar {
+    -webkit-appearance: none;
+}
+
+.contenedor::-webkit-scrollbar:horizontal {
+    height: 0px; /* Altura de la barra de desplazamiento horizontal */
+}
+.contenedor::-webkit-scrollbar:vertical {
+    width:7px;
+}
+
+.contenedor::-webkit-scrollbar-button:increment, .contenedor::-webkit-scrollbar-button {
+    display: none;
+}
+
+.contenedor::-webkit-scrollbar-thumb {
+    background-color: #797979;
+    border-radius: 20px;
+    border: 1px solid #484949;
+}
+
+.contenedor::-webkit-scrollbar-track:horizontal {
+    border-radius: 10px;
+}
+
+  
+.container-small {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.loading-dots {
+    display: flex;
+    justify-content: center;
+  }
+  
+  .dot {
+    width: 10px;
+    height: 10px;
+    background-color: #d2d2d2;
+    border-radius: 50%;
+    margin: 0 2px;
+    animation: bounce 1s infinite;
+  }
+  
+  .dot:nth-child(2) {
+    animation-delay: 0.1s;
+  }
+  
+  .dot:nth-child(3) {
+    animation-delay: 0.2s;
+  }
+  
+  @keyframes bounce {
+    0%, 100% {
+      transform: translateY(0);
+    }
+    50% {
+      transform: translateY(-10px);
+    }
+  }
+  
+
+  .fixed-footer {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    z-index: 9999;
+    padding: 10px; 
+  }
+
+  .dropdown {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 60vw; /* El 50% del ancho de la pantalla */
+    height: 80vh; /* El 50% de la altura de la pantalla */
+
+    border: 1px solid #ccc;
+    z-index: 1000; /* Asegura que esté por encima de otros elementos */
+  }
+
+  
+  .overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: transparent;
+    z-index: 2;
+  }
+
+
+

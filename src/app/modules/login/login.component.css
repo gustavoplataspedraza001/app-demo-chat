@@ -1,0 +1,42 @@
+.logo {
+    border-radius: 50%; 
+}
+
+.fondo-login {
+    /* background-image: url('../../../assets/dist/image/fondo.jpg');
+     */
+    /* background: rgb(121,149,158);
+    background: radial-gradient(circle, rgba(121,149,158,1) 0%, rgba(64,100,115,1) 32%, rgba(3,31,44,1) 75%); */
+    /* background: rgb(121,149,158);
+    background: linear-gradient(87deg, rgba(121,149,158,1) 0%, rgba(64,100,115,1) 50%, rgba(3,31,44,1) 100%); */
+    background-image: url('../../../assets/dist/image/background.jpg');
+    background-size: cover; 
+    background-repeat: no-repeat;
+    background-position: center; 
+    width: 100vw; 
+    height: 100vh; 
+    justify-content: center; 
+    align-items: center; 
+}
+
+.btn-azul {
+    background-color: #0056b3; 
+    color: #fff; 
+    border: none; 
+    font-size: 16px; 
+    margin-top: 5px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease; 
+}
+
+.btn-azul:hover {
+    background-color: #007bff ; 
+}
+
+.footer {
+    background-color: #2A4D69;
+    color: #fff;
+    width: 100vw;
+    height: 5vh;
+}
